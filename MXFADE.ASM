@@ -389,7 +389,7 @@ timertxt:
 freqtxt:
  DB 'freq:',0
 gaptxt:
- DB 'gap:',0
+ DB 'pause:1/',0
 instrumenttxt:
  DB 'patch:',0
 banktxt:
