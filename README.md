@@ -25,6 +25,6 @@ DOSBox tool - 2x2 MIDI notes crossfading by volume control
 
 ### Usefull references
 
-- OpenMIDIProject [https://openmidiproject.osdn.jp/documentations_en.html](https://openmidiproject.osdn.jp/documentations_en.html)
+- Instrument Definition File used by OpenMIDIProject [https://openmidiproject.osdn.jp/documentations_en.html](https://openmidiproject.osdn.jp/documentations_en.html)
 
 
