@@ -1,6 +1,10 @@
 # midiXfade
 DOSBox tool - 2x2 MIDI notes crossfading by volume control
 
+### Requirements
+
+- any DOSBox with MIDI UART mode configured in dosbox.conf file: mpu401=uart
+
 ### Screenshot
 
 ![screenshot](https://raw.githubusercontent.com/Kaproncai/midiXfade/main/screen.jpg)
@@ -18,3 +22,9 @@ DOSBox tool - 2x2 MIDI notes crossfading by volume control
 ### Channel volumes
 
 ![volume](https://raw.githubusercontent.com/Kaproncai/midiXfade/main/volume.jpg)
+
+### Usefull references
+
+- OpenMIDIProject [https://openmidiproject.osdn.jp/documentations_en.html](https://openmidiproject.osdn.jp/documentations_en.html)
+
+
