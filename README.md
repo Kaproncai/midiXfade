@@ -3,7 +3,7 @@ DOSBox tool - 2x2 MIDI notes crossfading by volume control
 
 ### Requirements
 
-- any DOSBox with MIDI UART mode configured in dosbox.conf file: mpu401=uart
+- any DOSBox with MIDI UART mode configured in **dosbox.conf** file: *mpu401=uart*
 
 ### Screenshot
 
