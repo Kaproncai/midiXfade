@@ -15,6 +15,7 @@ ORG 256
  MOV CX,SFX-MSGS
  REP OUTSB
  JMP TIMER
+
 MAIN:
  MOV AH,01H                  ; check keyboard buffer
  INT 16H
@@ -23,19 +24,6 @@ MAIN:
  INT 16H
  CMP AH,1                    ; key ESC
  JE RESET                    ; exit
-
- CMP AH,80                   ; key down
- JNE @F
- CMP BYTE [GAP-1],0
- JE @F
- DEC BYTE [GAP-1]
-@@:
- CMP AH,72                   ; key up
- JNE @F
- CMP BYTE [GAP-1],7
- JE @F
- INC BYTE [GAP-1]
-@@:
 
  CMP AH,2                    ; key 1
  JNE @F
@@ -75,16 +63,16 @@ MAIN:
 @@:
  CMP AH,8                    ; key 7
  JNE @F
- CMP BYTE [NON+11],0
+ CMP BYTE [NON2+11],0
  JE @F
- SHR BYTE [NON+11],1
+ SHR BYTE [NON2+11],1
 @@:
  CMP AH,9                    ; key 8
  JNE @F
- CMP BYTE [NON+11],127
+ CMP BYTE [NON2+11],127
  JE @F
- SHL BYTE [NON+11],1
- INC BYTE [NON+11]
+ SHL BYTE [NON2+11],1
+ INC BYTE [NON2+11]
 @@:
 
  CMP AH,16                   ; key q
@@ -125,16 +113,16 @@ MAIN:
 @@:
  CMP AH,22                   ; key u
  JNE @F
- CMP BYTE [NON+8],0
+ CMP BYTE [NON2+8],0
  JE @F
- SHR BYTE [NON+8],1
+ SHR BYTE [NON2+8],1
 @@:
  CMP AH,23                   ; key i
  JNE @F
- CMP BYTE [NON+8],127
+ CMP BYTE [NON2+8],127
  JE @F
- SHL BYTE [NON+8],1
- INC BYTE [NON+8]
+ SHL BYTE [NON2+8],1
+ INC BYTE [NON2+8]
 @@:
 
  CMP AH,30                   ; key a
@@ -175,16 +163,16 @@ MAIN:
 @@:
  CMP AH,36                   ; key j
  JNE @F
- CMP BYTE [NON+5],0
+ CMP BYTE [NON2+5],0
  JE @F
- SHR BYTE [NON+5],1
+ SHR BYTE [NON2+5],1
 @@:
  CMP AH,37                   ; key k
  JNE @F
- CMP BYTE [NON+5],127
+ CMP BYTE [NON2+5],127
  JE @F
- SHL BYTE [NON+5],1
- INC BYTE [NON+5]
+ SHL BYTE [NON2+5],1
+ INC BYTE [NON2+5]
 @@:
 
  CMP AH,21                   ; key y
@@ -225,33 +213,33 @@ MAIN:
 @@:
  CMP AH,50                   ; key m
  JNE @F
- CMP BYTE [NON+2],0
+ CMP BYTE [NON2+2],0
  JE @F
- SHR BYTE [NON+2],1
+ SHR BYTE [NON2+2],1
 @@:
  CMP AH,51                   ; key ,
  JNE @F
- CMP BYTE [NON+2],127
+ CMP BYTE [NON2+2],127
  JE @F
- SHL BYTE [NON+2],1
- INC BYTE [NON+2]
+ SHL BYTE [NON2+2],1
+ INC BYTE [NON2+2]
 @@:
 
  CMP AH,77
  JNE @F
- CMP BYTE [TIMER+1],10
+ CMP BYTE [TIMER+5],10
  JE @F
- DEC BYTE [TIMER+1]
- JMP TIMER
+ DEC BYTE [TIMER+5]
 @@:
  CMP AH,75
  JNE PRINT
- CMP BYTE [TIMER+1],0
+ CMP BYTE [TIMER+5],0
  JE PRINT
- INC BYTE [TIMER+1]
+ INC BYTE [TIMER+5]
 TIMER:
- MOV AL,13
+ MOV AL,168
  OUT 40H,AL
+ MOV AL,13
  OUT 40H,AL
 
 PRINT:
@@ -279,13 +267,13 @@ PRINT:
  CALL NEWLINE
  MOV SI,timertxt
  CALL PRINTSTR
- MOV AL,[TIMER+1]
+ MOV AL,[TIMER+5]
  CALL PRINTNUM8
 
  MOV SI,freqtxt
  CALL PRINTSTR
  MOV CL,[TIMER+1]
- MOV CH,CL
+ MOV CH,[TIMER+5]
  MOV AX,0012H
  MOV DX,34DDH
  JCXZ @F
@@ -293,13 +281,6 @@ PRINT:
  DIV CX
 @@:
  CALL PRINTNUM16
-
- MOV SI,gaptxt
- CALL PRINTSTR
- MOV AL,1
- MOV CL,[GAP-1]
- SHL AL,CL
- CALL PRINTNUM8
 
  MOV DI,BANK+19
  MOV BP,11
@@ -325,7 +306,7 @@ CHANELS:
  CALL PRINTNUM8
  MOV SI,velocitytxt
  CALL PRINTSTR
- MOV AL,[NON+BP]
+ MOV AL,[NON2+BP]
  CALL PRINTNUM8
  DEC DI
  DEC DI
@@ -387,13 +368,11 @@ PRINTNUM32:
 RETN
 
 infotxt:
- DB 'MidiXfader 0.1 by Abaddon',0
+ DB 'MidiXfader 0.2 by Abaddon',0
 timertxt:
  DB 'timer:',0
 freqtxt:
  DB 'freq:',0
-gaptxt:
- DB 'pause:1/',0
 instrumenttxt:
  DB 'patch:',0
 banktxt:
@@ -411,32 +390,44 @@ IRQ:
  PUSH CS
  POP DS
  MOV SI,SFX
- MOV BX,9
-FADE:
- MOV AH,[SI-SFX+COUNTER]
- MOV AL,[BX+SI-SFX+NON+2]
- SHR AL,2
-GAP:
- TEST BYTE [BX+SI-SFX+VOL],1
- JNZ .1
- NEG AH
- JMP .2
-.1:
- ADD AH,AL
-.2:
- AND AH,[BX+SI-SFX+NON+2]
- SUB AH,AL
- JNC .3
- CBW
-.3:
- MOV [BX+SI-SFX+VOL+2],AH
- SUB BX,3
- JNC FADE
+ MOV AL,[SI-SFX+COUNTER]
+ AND AL,63
+ MOV BYTE [SI-SFX+VOL+8],64
+ ADD [SI-SFX+VOL+8],AL
+ MOV BYTE [SI-SFX+VOL+11],127
+ SUB [SI-SFX+VOL+11],AL
+ SHL AL,1
+ MOV BYTE [SI-SFX+VOL+2],AL
+ XOR AL,126
+ MOV BYTE [SI-SFX+VOL+5],AL
 
  MOV CX,NON-SFX
  MOV AL,[SI-SFX+COUNTER]
- TEST AL,127
+ TEST AL,63
  JNZ NONOTE
+ AND AL,127
+ CMP AL,64
+NON2:
+ SALC
+ MOV AH,0
+ PUSH AX
+ MOV AH,0
+ PUSH AX
+ MOV AH,127
+ PUSH AX
+ MOV AH,127
+
+ AND AH,AL
+ MOV BYTE [SI-SFX+NON+11],AH
+ POP AX
+ AND AH,AL
+ MOV BYTE [SI-SFX+NON+8],AH
+ POP AX
+ AND AH,AL
+ MOV BYTE [SI-SFX+NON+5],AH
+ POP AX
+ AND AH,AL
+ MOV BYTE [SI-SFX+NON+2],AH
  MOV CL,NON-SFX+3*4
 NONOTE:
 
@@ -484,10 +475,10 @@ BANK:
  DB 0B2H,0,0
  DB 0B1H,0,0
  DB 0B0H,0,0
- DB 0C3H,107
- DB 0C2H,47
- DB 0C1H,37
- DB 0C0H,81
+ DB 0C3H,80
+ DB 0C2H,80
+ DB 0C1H,80
+ DB 0C0H,80
 VOL:
  DB 0B3H,7,0
  DB 0B2H,7,0
