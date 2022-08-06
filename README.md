@@ -1,5 +1,5 @@
 # midiXfade
-DOSBox tool - 2x2 notes crossfading by volume control
+DOSBox tool - 2x2 MIDI notes crossfading by volume control
 
 ### Screenshot
 
@@ -15,6 +15,6 @@ DOSBox tool - 2x2 notes crossfading by volume control
 
 *deafult: 13 (160 bpm)
 
-### Mixing volumes of channels
+### Channel volumes
 
 ![volume](https://raw.githubusercontent.com/Kaproncai/midiXfade/main/volume.jpg)
