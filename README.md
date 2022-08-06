@@ -13,7 +13,7 @@ DOSBox tool - 2x2 MIDI notes crossfading by volume control
 - Channel #3: zxcvbnm, (yxcvbnm)
 - Tempo*: left/right arrows 
 
-*deafult: 13 (160 bpm)
+*default: 13 (160 bpm)
 
 ### Channel volumes
 
