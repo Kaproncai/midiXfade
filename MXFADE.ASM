@@ -1,5 +1,5 @@
 ORG 256
- MOV FS,AX		     ; FS: segment of BIOS variables
+ MOV FS,AX                   ; FS: segment of BIOS variables
  MOV AL,13H
  INT 10H
  PUSH BX
@@ -17,16 +17,16 @@ ORG 256
  JMP TIMER
 
 MAIN:
- MOV AH,01H		     ; check keyboard buffer
+ MOV AH,01H                  ; check keyboard buffer
  INT 16H
  JZ PRINT
  MOV AH,00H
  INT 16H
- CMP AH,1		     ; key ESC
- JE RESET		     ; exit
+ CMP AH,1                    ; key ESC
+ JE RESET                    ; exit
 
- CMP	AL,9			; key TAB
- JNE	@F
+ CMP AL,9                    ; key TAB
+ JNE @F
  MOV AL,[BANK+19]
  XCHG [BANK+15],AL
  MOV [BANK+19],AL
@@ -53,49 +53,49 @@ MAIN:
  MOV [NON2+8],AL
 @@:
 
- CMP AH,2		     ; key 1
+ CMP AH,2                    ; key 1
  JNE @F
  CMP BYTE [BANK+19],0
  JE @F
  DEC BYTE [BANK+19]
 @@:
- CMP AH,3		     ; key 2
+ CMP AH,3                    ; key 2
  JNE @F
  CMP BYTE [BANK+19],127
  JE @F
  INC BYTE [BANK+19]
 @@:
- CMP AH,4		     ; key 3
+ CMP AH,4                    ; key 3
  JNE @F
  CMP BYTE [BANK+11],0
  JE @F
  DEC BYTE [BANK+11]
 @@:
- CMP AH,5		     ; key 4
+ CMP AH,5                    ; key 4
  JNE @F
  CMP BYTE [BANK+11],9
  JE @F
  INC BYTE [BANK+11]
 @@:
- CMP AH,6		     ; key 5
+ CMP AH,6                    ; key 5
  JNE @F
  CMP BYTE [NON+10],0
  JE @F
  DEC BYTE [NON+10]
 @@:
- CMP AH,7		     ; key 6
+ CMP AH,7                    ; key 6
  JNE @F
  CMP BYTE [NON+10],127
  JE @F
  INC BYTE [NON+10]
 @@:
- CMP AH,8		     ; key 7
+ CMP AH,8                    ; key 7
  JNE @F
  CMP BYTE [NON2+11],0
  JE @F
  SHR BYTE [NON2+11],1
 @@:
- CMP AH,9		     ; key 8
+ CMP AH,9                    ; key 8
  JNE @F
  CMP BYTE [NON2+11],127
  JE @F
@@ -103,49 +103,49 @@ MAIN:
  INC BYTE [NON2+11]
 @@:
 
- CMP AH,16		     ; key q
+ CMP AH,16                   ; key q
  JNE @F
  CMP BYTE [BANK+17],0
  JE @F
  DEC BYTE [BANK+17]
 @@:
- CMP AH,17		     ; key w
+ CMP AH,17                   ; key w
  JNE @F
  CMP BYTE [BANK+17],127
  JE @F
  INC BYTE [BANK+17]
 @@:
- CMP AH,18		     ; key e
+ CMP AH,18                   ; key e
  JNE @F
  CMP BYTE [BANK+8],0
  JE @F
  DEC BYTE [BANK+8]
 @@:
- CMP AH,19		     ; key r
+ CMP AH,19                   ; key r
  JNE @F
  CMP BYTE [BANK+8],9
  JE @F
  INC BYTE [BANK+8]
 @@:
- CMP AH,20		     ; key t
+ CMP AH,20                   ; key t
  JNE @F
  CMP BYTE [NON+7],0
  JE @F
  DEC BYTE [NON+7]
 @@:
- CMP AH,44		     ; key z
+ CMP AH,44                   ; key z
  JNE @F
  CMP BYTE [NON+7],127
  JE @F
  INC BYTE [NON+7]
 @@:
- CMP AH,22		     ; key u
+ CMP AH,22                   ; key u
  JNE @F
  CMP BYTE [NON2+8],0
  JE @F
  SHR BYTE [NON2+8],1
 @@:
- CMP AH,23		     ; key i
+ CMP AH,23                   ; key i
  JNE @F
  CMP BYTE [NON2+8],127
  JE @F
@@ -153,49 +153,49 @@ MAIN:
  INC BYTE [NON2+8]
 @@:
 
- CMP AH,30		     ; key a
+ CMP AH,30                   ; key a
  JNE @F
  CMP BYTE [BANK+15],0
  JE @F
  DEC BYTE [BANK+15]
 @@:
- CMP AH,31		     ; key s
+ CMP AH,31                   ; key s
  JNE @F
  CMP BYTE [BANK+15],127
  JE @F
  INC BYTE [BANK+15]
 @@:
- CMP AH,32		     ; key d
+ CMP AH,32                   ; key d
  JNE @F
  CMP BYTE [BANK+5],0
  JE @F
  DEC BYTE [BANK+5]
 @@:
- CMP AH,33		     ; key f
+ CMP AH,33                   ; key f
  JNE @F
  CMP BYTE [BANK+5],9
  JE @F
  INC BYTE [BANK+5]
 @@:
- CMP AH,34		     ; key g
+ CMP AH,34                   ; key g
  JNE @F
  CMP BYTE [NON+4],0
  JE @F
  DEC BYTE [NON+4]
 @@:
- CMP AH,35		     ; key h
+ CMP AH,35                   ; key h
  JNE @F
  CMP BYTE [NON+4],127
  JE @F
  INC BYTE [NON+4]
 @@:
- CMP AH,36		     ; key j
+ CMP AH,36                   ; key j
  JNE @F
  CMP BYTE [NON2+5],0
  JE @F
  SHR BYTE [NON2+5],1
 @@:
- CMP AH,37		     ; key k
+ CMP AH,37                   ; key k
  JNE @F
  CMP BYTE [NON2+5],127
  JE @F
@@ -203,54 +203,62 @@ MAIN:
  INC BYTE [NON2+5]
 @@:
 
- CMP AH,21		     ; key y
+ CMP AH,21                   ; key y
  JNE @F
  CMP BYTE [BANK+13],0
  JE @F
  DEC BYTE [BANK+13]
 @@:
- CMP AH,45		     ; key x
+ CMP AH,45                   ; key x
  JNE @F
  CMP BYTE [BANK+13],127
  JE @F
  INC BYTE [BANK+13]
 @@:
- CMP AH,46		     ; key c
+ CMP AH,46                   ; key c
  JNE @F
  CMP BYTE [BANK+2],0
  JE @F
  DEC BYTE [BANK+2]
 @@:
- CMP AH,47		     ; key v
+ CMP AH,47                   ; key v
  JNE @F
  CMP BYTE [BANK+2],9
  JE @F
  INC BYTE [BANK+2]
 @@:
- CMP AH,48		     ; key b
+ CMP AH,48                   ; key b
  JNE @F
  CMP BYTE [NON+1],0
  JE @F
  DEC BYTE [NON+1]
 @@:
- CMP AH,49		     ; key n
+ CMP AH,49                   ; key n
  JNE @F
  CMP BYTE [NON+1],127
  JE @F
  INC BYTE [NON+1]
 @@:
- CMP AH,50		     ; key m
+ CMP AH,50                   ; key m
  JNE @F
  CMP BYTE [NON2+2],0
  JE @F
  SHR BYTE [NON2+2],1
 @@:
- CMP AH,51		     ; key ,
+ CMP AH,51                   ; key ,
  JNE @F
  CMP BYTE [NON2+2],127
  JE @F
  SHL BYTE [NON2+2],1
  INC BYTE [NON2+2]
+@@:
+
+ TEST BYTE [FS:417H],16      ; test scroll-lock state
+ JZ @F
+ MOV AL,[NON+10]
+ MOV [NON+7],AL
+ MOV AL,[NON+4]
+ MOV [NON+1],AL
 @@:
 
  CMP AH,77
@@ -274,19 +282,19 @@ PRINT:
  MOV BH,0
  MOV AH,2
  CWD
- INT 10H		     ; set cursor pos to the topleft corner
+ INT 10H                     ; set cursor pos to the topleft corner
 
  MOV SI,infotxt
  CALL PRINTSTRLN.1
- MOV BL,2		     ; color green
+ MOV BL,2                    ; color green
  TEST BYTE [FS:417H],16      ; test scroll-lock state
  JZ @F
- MOV BL,4		     ; color red
+ MOV BL,4                    ; color red
 @@:
- MOV AX,[COUNTER+1]	     ; pattern
+ MOV AX,[COUNTER+1]          ; pattern
  SHR AX,9
  CALL PRINTNUM8
- MOV AX,[COUNTER]	     ; counter
+ MOV AX,[COUNTER]            ; counter
  CALL PRINTNUM16
  MOV AL,' '
  INT 10H
@@ -338,6 +346,7 @@ CHANELS:
  CALL PRINTNUM8
  MOV AL,' '
  INT 10H
+ INT 10H
  DEC DI
  DEC DI
  SUB BP,3
@@ -355,7 +364,7 @@ RETN
 PRINTSTRLN:
  CALL NEWLINE
 .1:
- MOV BL,14		     ; color yellow
+ MOV BL,14                   ; color yellow
  CALL PRINTSTR.1
  MOV AL,' '
  INT 10H
@@ -369,32 +378,32 @@ PRINTSTR:
  INT 10H
  CMP [SI],BH
  JNE .1
- MOV BL,11		     ; color cyan
+ MOV BL,11                   ; color cyan
 RETN
 
 PRINTNUM8:
- MOV	AH,0
+ MOV    AH,0
 PRINTNUM16:
- MOVZX	EAX,AX
+ MOVZX  EAX,AX
 PRINTNUM32:
 .0:
- SUB	CX,CX
+ SUB    CX,CX
 .1:
- SUB	EDX,EDX
- MOV	ESI,10
- DIV	ESI
- ADD	DL,'0'
- PUSH	DX
- INC	CX
- TEST	EAX,EAX
- JNZ	.1
+ SUB    EDX,EDX
+ MOV    ESI,10
+ DIV    ESI
+ ADD    DL,'0'
+ PUSH   DX
+ INC    CX
+ TEST   EAX,EAX
+ JNZ    .1
 .2:
- POP	AX
- MOV	AH,0EH
- INT	10H
- LOOP	.2
- MOV	AL,' '
- INT	10H
+ POP    AX
+ MOV    AH,0EH
+ INT    10H
+ LOOP   .2
+ MOV    AL,' '
+ INT    10H
 RETN
 
 infotxt:
@@ -404,15 +413,15 @@ timertxt:
 freqtxt:
  DB 'freq:',0
 instrumenttxt:
- DB 'patch:',0
+ DB 'patch',0
 banktxt:
- DB 'bank:',0
+ DB 'bank',0
 notetxt:
- DB 'note:',0
+ DB 'note',0
 velocitytxt:
- DB 'vel:',0
+ DB 'vel',0
 channeltxt:
- DB 'ch:',0
+ DB 'ch',0
 
 IRQ:
  PUSHA
@@ -507,8 +516,8 @@ BANK:
  DB 0B0H,0,0
  DB 0C3H,80
  DB 0C2H,80
- DB 0C1H,80
- DB 0C0H,80
+ DB 0C1H,107
+ DB 0C0H,47
 VOL:
  DB 0B3H,7,0
  DB 0B2H,7,0
