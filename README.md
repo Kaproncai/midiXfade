@@ -17,9 +17,10 @@ DOSBox tool - 2x2 MIDI notes crossfading by volume control
 - Channel #3: zxcvbnm, (yxcvbnm)
 - Tempo*: left/right arrows 
 - Tab: swap ch1-2 settings with ch2-3 settings
-- ScrollLock: playing some notes
+- Space: copy ch1-2 settings to ch2-3 settings
+- CapsLock: playing some notes
 
-*default: 13 (160 bpm)
+*default: 13 (161 bpm)
 
 ### Channel volumes
 

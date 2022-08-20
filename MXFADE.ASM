@@ -56,6 +56,26 @@ MAIN:
  MOV [NON2+8],AL
 @@:
 
+ CMP AH,57                   ; key SPACE
+ JNE @F
+ MOV AL,[BANK+19]
+ MOV [BANK+15],AL
+ MOV AL,[BANK+17]
+ MOV [BANK+13],AL
+ MOV AL,[BANK+11]
+ MOV [BANK+5],AL
+ MOV AL,[BANK+8]
+ MOV [BANK+2],AL
+ MOV AL,[NON+10]
+ MOV [NON+4],AL
+ MOV AL,[NON+7]
+ MOV [NON+1],AL
+ MOV AL,[NON2+11]
+ MOV [NON2+5],AL
+ MOV AL,[NON2+8]
+ MOV [NON2+2],AL
+@@:
+
  CMP AH,2                    ; key 1
  JNE @F
  CMP BYTE [BANK+19],0
@@ -268,13 +288,13 @@ MAIN:
  JE PRINT
  INC BYTE [TIMER+5]
 TIMER:
- MOV AL,168
+ MOV AL,93H;168
  OUT 40H,AL
  MOV AL,13
  OUT 40H,AL
 
 PRINT:
- TEST BYTE [FS:417H],16      ; test scroll-lock state
+ TEST BYTE [FS:417H],64      ; test caps-lock state
  JZ @F
  MOV SI,[COUNTER]
  SHR SI,7
@@ -300,7 +320,7 @@ PRINT:
  MOV SI,infotxt
  CALL PRINTSTRLN.1
  MOV BL,2                    ; color green
- TEST BYTE [FS:417H],16      ; test scroll-lock state
+ TEST BYTE [FS:417H],64      ; test caps-lock state
  JZ @F
  MOV BL,4                    ; color red
 @@:
@@ -450,8 +470,10 @@ IRQ:
  SUB [SI-SFX+VOL+11],AL
  SHL AL,1
  MOV BYTE [SI-SFX+VOL+2],AL
+; MOV BYTE [SI-SFX+VOL+8],AL
  XOR AL,126
  MOV BYTE [SI-SFX+VOL+5],AL
+; MOV BYTE [SI-SFX+VOL+11],AL
 
  MOV CX,NON-SFX
  MOV AL,[SI-SFX+COUNTER]
@@ -533,10 +555,10 @@ BANK:
  DB 0B2H,0,0
  DB 0B1H,0,0
  DB 0B0H,0,0
- DB 0C3H,80
- DB 0C2H,80
- DB 0C1H,107
- DB 0C0H,47
+ DB 0C3H,107
+ DB 0C2H,47
+ DB 0C1H,81
+ DB 0C0H,35
 VOL:
  DB 0B3H,7,0
  DB 0B2H,7,0
